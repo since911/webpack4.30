@@ -11,11 +11,16 @@
   构建时间|17s|11s
 
   ## 优化要点：
-  * dllPlugin预打包不常变动的公共库（vue,vuex,axios等） 
-  * happypack开启多线程编译
-  * 独立抽取manifest.js，以免vendor等库文件缓存失效
-  * inline  manifest，减少一次http请求
-  * 开启gzip压缩
-  * 生产模式用到的插件或loader不要配置到common里
-  * noParse，避免不必要的解析
+  > dllPlugin预打包不常变动的公共库（vue,vuex,axios等）
+
+  > happypack开启多线程编译
+
+  > 独立抽取manifest.js，以免vendor等库文件缓存失效
+
+  > inline  manifest，减少一次http请求
+  > 开启gzip压缩
+  
+  > 生产模式用到的插件或loader不要配置到common里
+
+  > noParse，避免不必要的解析
 
