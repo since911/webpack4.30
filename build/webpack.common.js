@@ -8,9 +8,6 @@ const util = require('./util.js')
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
-  entry: {
-    app: './src/main.js'
-  },
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].js',

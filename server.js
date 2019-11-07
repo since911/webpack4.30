@@ -1,47 +1,26 @@
-const Vue = require('vue')
-const server = require('express')()
-const renderer = require('vue-server-renderer').createRenderer()
+const express = require("express");
+const path = require("path");
+const vueRender = require("vue-server-renderer");
+const serverBundle = require('./dist/vue-ssr-server-bundle.json')
+const clientManifest = require('./dist/vue-ssr-client-manifest.json')
+const template = require('fs').readFileSync('./dist/index.html', 'utf-8')
+const app = express();
 
-server.get('*', (req, res) => {
-  const app = new Vue({
-    data: {
-      url: req.url
-    },
-    template: `<div>访问的 URL 是： {{ url }}</div>`
-  })
+app.use(express.static(path.join(__dirname, './dist')));
 
-  renderer.renderToString(app, (err, html) => {
-    if (err) {
-      res.status(500).end('Internal Server Error')
-      return
-    }
-    res.end(`
-      <!DOCTYPE html>
-      <html lang="en">
-        <head><title>Hello</title></head>
-        <body>${html}</body>
-      </html>
-    `)
-  })
-})
-
-
-const { createBundleRenderer } = require('vue-server-renderer')
-
-const renderer = createBundleRenderer(serverBundle, {
-  runInNewContext: false, // 推荐
-  template, // （可选）页面模板
-  clientManifest // （可选）客户端构建 manifest
-})
-
-// 在服务器处理函数中……
-server.get('*', (req, res) => {
+app.get('*',(req,res) => {
   const context = { url: req.url }
-  // 这里无需传入一个应用程序，因为在执行 bundle 时已经自动创建过。
-  // 现在我们的服务器与应用程序已经解耦！
+  const renderer = vueRender.createBundleRenderer(serverBundle, {
+    runInNewContext: false,
+    template,
+    clientManifest
+  })
   renderer.renderToString(context, (err, html) => {
-    // 处理异常……
+    console.log(123,err)
     res.end(html)
   })
 })
-server.listen(8080)
+
+app.listen(5001,() => {
+    console.log("服务已开启")
+});

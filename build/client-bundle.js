@@ -3,11 +3,17 @@ const merge = require('webpack-merge')
 const baseConfig = require('./webpack.common.js')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
-module.exports = merge(baseConfig, {
-  entry: '../src/entry-client.js',
+const config = merge(baseConfig, {
+  entry: './src/entry-client.js',
   plugins: [
-    // 此插件在输出目录中
-    // 生成 `vue-ssr-client-manifest.json`。
+    new webpack.DllReferencePlugin({
+      manifest: require('../dist/dll/vendor-manifest.json')
+    }),
     new VueSSRClientPlugin()
   ]
+})
+
+const compiler = webpack(config);
+compiler.run(function(err,stats){
+  console.log(123)
 })
