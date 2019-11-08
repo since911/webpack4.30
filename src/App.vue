@@ -1,5 +1,8 @@
 <template>
-  <router-view></router-view>
+  <div>
+    <router-link to="/list">List</router-link>
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
