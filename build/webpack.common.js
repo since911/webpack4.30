@@ -20,27 +20,17 @@ module.exports = {
         loader: 'vue-loader',
         include: [util.resolve('src'), /map/i],
         options: {
-          postcss: [require('autoprefixer')],
-          js: 'happypack/loader?id=vue'
+          preserveWhitespace: false,
+          postcss: [require('autoprefixer')]
         }
       },
       {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [process.env.NODE_ENV !== 'production' ? 'vue-style-loader' : MiniCssExtractPlugin.loader,'css-loader']
       },
       {
         test: /\.less$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'less-loader'],
-        include: util.resolve('src')
-      },
-      {
-        test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'sass-loader'],
-        include: util.resolve('src')
-      },
-      {
-        test: /\.styl(us)?$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader', 'stylus-loader'],
+        use: [process.env.NODE_ENV !== 'production' ? 'vue-style-loader' : MiniCssExtractPlugin.loader, 'postcss-loader', 'less-loader'],
         include: util.resolve('src')
       },
       {
@@ -69,14 +59,12 @@ module.exports = {
       }
     ]
   },
-
   resolve: {
     unsafeCache: true,
     extensions: ['.js', '.vue', '.json'],
     alias: {
       vue$: 'vue/dist/vue.esm.js',
-      '@': util.resolve('src'),
-      'cube-ui': 'cube-ui/lib'
+      '@': util.resolve('src')
     }
   },
   devtool: 'source-map',
@@ -101,16 +89,6 @@ module.exports = {
         to: util.resolve('dist/static'),
         ignore: ['.*']
       }
-    ]),
-    new HappyPack({
-      id: 'vue',
-      loaders: [
-        {
-          loader: 'babel-loader?cacheDirectory=true'
-        }
-      ],
-      threadPool: HappyPack.ThreadPool({ size: 5 }),
-      verbose: true
-    })
+    ])
   ]
 }

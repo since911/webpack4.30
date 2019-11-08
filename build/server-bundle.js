@@ -10,7 +10,6 @@ const config = merge(baseConfig, {
   target: 'node',
   devtool: 'source-map',
   output: {
-    filename:'server-buldle.js',
     libraryTarget: 'commonjs2'
   },
   externals: nodeExternals({
@@ -21,7 +20,9 @@ const config = merge(baseConfig, {
   ]
 })
 
-const compiler = webpack(config);
-compiler.run(function(err,stats){
-  console.log(123)
-})
+module.exports = config
+
+// const compiler = webpack(config);
+// compiler.run(function(err,stats){
+//   console.log(123)
+// })

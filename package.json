@@ -4,9 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --compress --inline --progress --config  build/webpack.dev.js",
+    "dev":"cross-env NODE_ENV=development node ./server.js",
+    "prod": "cross-env NODE_ENV=production node ./server.js",
     "build": "node build/webpack.pro.js",
-    "site": "node build/webpack.run.js",
     "dll": "node  build/webpack.dll.js"
   },
   "author": "zhouchao",
@@ -51,6 +51,7 @@
     "less-loader": "^5.0.0",
     "lib-flexible": "^0.3.2",
     "md5": "^2.2.1",
+    "memory-fs": "^0.5.0",
     "mini-css-extract-plugin": "^0.6.0",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
